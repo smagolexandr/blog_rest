@@ -1,0 +1,16 @@
+<?php
+
+require_once __DIR__.'/base_script.php';
+require_once __DIR__.'/../vendor/autoload.php';
+
+$options = getopt("", ['hostname:', 'env:']);
+
+$stringOptions = ''.array_key_exists('env', $options) ? ' --env=' . $options['env'] : ' --env=dev';
+
+$parameters = \Symfony\Component\Yaml\Yaml::parse(__DIR__.'/../app/config/parameters.yml');
+$parameters = $parameters['parameters'];
+
+show_run("composer install", "composer install --no-interaction");
+
+
+exit(0);
