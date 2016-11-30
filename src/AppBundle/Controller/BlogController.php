@@ -18,18 +18,16 @@ class BlogController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $file = fopen("../src/AppBundle/Data/data.txt","r+");
-        if(!$file)
-        {
-            echo("Ошибка открытия файла");
-        }
-        else
-        {
+        $file = fopen('../src/AppBundle/Data/data.txt', 'r+');
+        if (!$file) {
+            echo 'Ошибка открытия файла';
+        } else {
             $blog_post = json_decode(fgets($file));
         }
         fclose($file);
+
         return [
-            'response' => $blog_post
+            'response' => $blog_post,
         ];
     }
 
@@ -38,19 +36,17 @@ class BlogController extends Controller
      * @Template("default/index.html.twig")
      * @Method("POST")
      */
-    public function newPostAction(Request $request){
+    public function newPostAction(Request $request)
+    {
         $blog_post = [
             'id' => $_POST['id'],
             'title' => $_POST['title'],
-            'post' => $_POST['post']
+            'post' => $_POST['post'],
         ];
-        $file = fopen("../src/AppBundle/Data/data.txt","w");
-        if(!$file)
-        {
-            echo("Ошибка открытия файла");
-        }
-        else
-        {
+        $file = fopen('../src/AppBundle/Data/data.txt', 'w');
+        if (!$file) {
+            echo 'Ошибка открытия файла';
+        } else {
             fwrite($file, json_encode($blog_post));
         }
         echo json_encode($blog_post);
@@ -64,25 +60,22 @@ class BlogController extends Controller
      * @Template("default/edit.html.twig")
      * METHOD("GET")
      */
-    public function editPostAction(Request $request, $id){
-        $file = fopen("../src/AppBundle/Data/data.txt","r+");
-        if(!$file)
-        {
-            echo("Ошибка открытия файла");
-        }
-        else
-        {
+    public function editPostAction(Request $request, $id)
+    {
+        $file = fopen('../src/AppBundle/Data/data.txt', 'r+');
+        if (!$file) {
+            echo 'Ошибка открытия файла';
+        } else {
             $blog_post = json_decode(fgets($file));
         }
         fclose($file);
-        if($blog_post->id == $id){
+        if ($blog_post->id == $id) {
             return [
-                'response' => $blog_post
+                'response' => $blog_post,
             ];
         } else {
-            echo "failed";
+            echo 'failed';
         }
-
     }
 
     /**
@@ -90,19 +83,17 @@ class BlogController extends Controller
      * @Template("default/edit.html.twig")
      * METHOD("PATCH")
      */
-    public function patchPostAction(Request $request){
+    public function patchPostAction(Request $request)
+    {
         $blog_post = [
             'id' => $_POST['id'],
             'title' => $_POST['title'],
-            'post' => $_POST['post']
+            'post' => $_POST['post'],
         ];
-        $file = fopen("../src/AppBundle/Data/data.txt","r+");
-        if(!$file)
-        {
-            echo("Ошибка открытия файла");
-        }
-        else
-        {
+        $file = fopen('../src/AppBundle/Data/data.txt', 'r+');
+        if (!$file) {
+            echo 'Ошибка открытия файла';
+        } else {
             fwrite($file, json_encode($blog_post));
         }
         fclose($file);
@@ -115,19 +106,17 @@ class BlogController extends Controller
      * @Template("default/edit.html.twig")
      * METHOD("PUT")
      */
-    public function editPostHandlerAction(Request $request){
+    public function editPostHandlerAction(Request $request)
+    {
         $blog_post = [
             'id' => $_POST['id'],
             'title' => $_POST['title'],
-            'post' => $_POST['post']
+            'post' => $_POST['post'],
         ];
-        $file = fopen("../src/AppBundle/Data/data.txt","w");
-        if(!$file)
-        {
-            echo("Ошибка открытия файла");
-        }
-        else
-        {
+        $file = fopen('../src/AppBundle/Data/data.txt', 'w');
+        if (!$file) {
+            echo 'Ошибка открытия файла';
+        } else {
             fwrite($file, json_encode($blog_post));
         }
         echo json_encode($blog_post);
@@ -140,16 +129,15 @@ class BlogController extends Controller
      * @Route("/delete/{id}", name="delete_post")
      * METHOD("DELETE")
      */
-    public function deletePostAction(Request $request,$id){
-        $file = fopen("../src/AppBundle/Data/data.txt","w");
-        if(!$file)
-        {
-            echo("Ошибка открытия файла");
+    public function deletePostAction(Request $request, $id)
+    {
+        $file = fopen('../src/AppBundle/Data/data.txt', 'w');
+        if (!$file) {
+            echo 'Ошибка открытия файла';
         }
 
         fclose($file);
 
         return $this->redirectToRoute('homepage');
     }
-
 }
